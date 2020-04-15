@@ -33,7 +33,7 @@ class RestClient
             'body' => json_encode($data)
         ));
         if ($response->getStatusCode() === 200) {
-            return json_decode($response->getBody()->getContents());;
+            return json_decode($response->getBody());;
         } else {
             return $response->getReasonPhrase();
         }
