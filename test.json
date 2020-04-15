@@ -1,0 +1,11 @@
+{
+  "GSM": "25471xxxxxx",
+  "SMSText": "SMS message",
+  "broadCastName": "broadcast message",
+  "password": "25471xxxxxx",
+  "queue": false,
+  "sender": "InfoSMS",
+  "service": "twilio",
+  "type": "longSMS",
+  "user": "username"
+}

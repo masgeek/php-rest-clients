@@ -1,0 +1,16 @@
+{
+    "name": "masgeek/rest-consumer",
+    "description": "Rest API consumer for PHP",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^6.5",
+        "mashape/unirest-php": "^3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sammy Barasa",
+            "email": "barsamms@gmail.com"
+        }
+    ]
+}
