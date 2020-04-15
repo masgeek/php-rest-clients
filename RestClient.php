@@ -2,7 +2,6 @@
 
 namespace app;
 
-use GuzzleHttp\RequestOptions;
 use Unirest\Request;
 
 require_once 'vendor/autoload.php';
@@ -10,10 +9,16 @@ require_once 'vendor/autoload.php';
 class RestClient
 {
     public $endpoint;
+    public $headers;
 
     public function __construct()
     {
         $this->endpoint = 'https://api.tsobu.co.ke';
+//        $this->endpoint = 'http://127.0.0.1:9000/api';
+        $this->headers = array(
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+        );
     }
 
     public function sendSMSGuzzle(array $data)
@@ -22,12 +27,13 @@ class RestClient
             'base_uri' => $this->endpoint,
             'http_errors' => false
         ));
-        $response = $client->post("v1/sms/single", [
-            RequestOptions::JSON => json_encode($data)
-        ]); //request('POST', "v1/sms/single");
 
+        $response = $client->post("v1/sms/single", array(
+            'headers' => $this->headers,
+            'body' => json_encode($data)
+        ));
         if ($response->getStatusCode() === 200) {
-            return $response;
+            return json_decode($response->getBody()->getContents());;
         } else {
             return $response->getReasonPhrase();
         }
@@ -35,15 +41,11 @@ class RestClient
 
     public function sendSMSUniRest(array $data)
     {
-        $headers = array(
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-        );
 
         //Request::verifyPeer(false); // Disables SSL cert validation
         $body = Request\Body::Json($data);
 
-        $response = Request::post("{$this->endpoint}/v1/sms/single", $headers, $body);
+        $response = Request::post("{$this->endpoint}/v1/sms/single", $this->headers, $body);
 
         return $response->body;
     }
